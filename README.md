@@ -23,7 +23,7 @@ material
 // Add new material to databse
 POST /api/material
 
-// Get all materials informations in Json-format
+// Get all materials information in Json-format
 GET /api/materials
 
 // Get single material information
