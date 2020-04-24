@@ -52,14 +52,35 @@ $(document).ready(() => {
             },
             {
                 data: "min_strength_density",
-                type: "float",
+                type: "readonly",
                 required: true
             },
             {
                 data: "max_strength_density",
-                type: "float",
+                type: "readonly",
                 required: true
             }
-        ]
+        ],
+
+        // define buttons
+        dom: "Bfrtip",
+        select: "single",
+        resposnive: true,
+        altEditor: true,
+        buttons: [
+            "columnsToggle",
+            {
+                text: "Create",
+                name: "add"
+            }
+        ],
+        onAddRow: (datatable, rowdata, success, error) => {
+            $.ajax({
+                url: "api/material",
+                type: "post",
+                data: rowdata,
+                success
+            })
+        }
     });
 });
