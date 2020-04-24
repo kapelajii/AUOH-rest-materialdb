@@ -1,8 +1,11 @@
 const material_model = require('./material_model');
 
-// CREATE
-const api_post_material = (req, res, next) => {
 
+
+// HELPPER FUNCTIONS
+
+// Material data
+const material_data = (req) => {
     let data ={
         name: req.body.name,
         min_density: req.body.min_density,
@@ -13,7 +16,14 @@ const api_post_material = (req, res, next) => {
         min_strength_density: req.body.min_strength / req.body.max_density,
         max_strength_density: req.body.max_strength / req.body.min_density
     };
+    return data;
+};
 
+// CREATE
+const api_post_material = (req, res, next) => {
+
+    // get material data 
+    let data = material_data(req);
     let new_material = material_model(data);
 
     new_material.save().then(()=> {
@@ -41,6 +51,20 @@ const api_get_materials = (req, res, next) => {
 };
 
 // UPDATE
+// PUT api/put/5e8773c1a97d8a5e90c94cd8
+const api_put_material = (req, res, next ) => {
+    let id = req.params.id;
+    let data = material_data(req);
+
+    // property new return the modified document rather than the original. defaults to false 
+    material_model.findByIdAndUpdate(id, data, {new: true}).then( (material) => {
+        res.send(material);
+
+    }).catch(err =>{
+        res.status(500);
+        console.log(err);  
+    });
+};
 
 // DELETE
 // api/material/5e8773c1a97d8a5e90c94cd8
@@ -63,4 +87,5 @@ const api_delete_material = (req, res, next) => {
 // Exports
 module.exports.api_get_materials = api_get_materials;
 module.exports.api_post_material = api_post_material;
+module.exports.api_put_material = api_put_material;
 module.exports.api_delete_material = api_delete_material;

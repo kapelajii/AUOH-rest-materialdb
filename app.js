@@ -41,6 +41,10 @@ app.post("/api/material", material_controller.api_post_material);
 app.get("/api/materials", material_controller.api_get_materials);
 
 // UPDATE
+// app.patch update only spesific parameters
+// app.put replace all parameters
+app.put("/api/material/:id", material_controller.api_put_material);
+
 
 // DELETE
 app.delete("/api/material/:id", material_controller.api_delete_material);
