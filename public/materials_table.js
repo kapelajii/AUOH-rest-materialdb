@@ -72,6 +72,18 @@ $(document).ready(() => {
             {
                 text: "Create",
                 name: "add"
+            },
+            {
+                text: "Edit",
+                name: "edit"
+            },
+            {
+                text: "Delete",
+                name: "delete"
+            },
+            {
+                text: "Refresh",
+                name: "refresh"
             }
         ],
         onAddRow: (datatable, rowdata, success, error) => {
@@ -79,8 +91,27 @@ $(document).ready(() => {
                 url: "api/material",
                 type: "post",
                 data: rowdata,
-                success
-            })
+                success: success,
+                error: error
+            });
+        },
+        onDeleteRow: (datatable, rowdata, success, error) => {
+            $.ajax({
+                url: "api/material" +rowdata._id,
+                type: "delete",
+                data: rowdata,
+                success: success,
+                error: error
+            });
+        },
+        onEditRow: (datatable, rowdata, success, error) => {
+            $.ajax({
+                url: "/api/material/" + rowdata._id,
+                type: "PUT",
+                data: rowdata,
+                success: success,
+                error: error
+            });
         }
     });
 });
