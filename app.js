@@ -2,9 +2,7 @@ const express = require('express');
 
 const mongoose = require('mongoose');
 
-require('dotenv').config();
-
-
+const dotenv = require('dotenv').config();
 
 const body_parser = require('body-parser');
 
@@ -25,6 +23,11 @@ app.use( (req, res, next) =>{
     // GET /api/materials
 
 });
+
+// Set access only to public folder 
+// GET index.html
+// --> /public/index.html
+app.use("/", express.static("public"));
 
 // ---------------------------
 // Restful API
@@ -53,7 +56,7 @@ app.delete("/api/material/:id", material_controller.api_delete_material);
 // Database connection
 //---------------------------
 
-const database_uri = "mongodb+srv://admin:"+process.env.DB_PASS+"@cluster0-gbsqa.mongodb.net/materialdb?retryWrites=true&w=majority"
+const database_uri = "mongodb+srv://"+process.env.DB_USER +":" +process.env.DB_PASSWORD+"@cluster0-gbsqa.mongodb.net/materialdb?retryWrites=true&w=majority"
 
 mongoose.connect(database_uri, {
     useCreateIndex: true,
